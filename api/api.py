@@ -1,10 +1,10 @@
 from django.db.models import Q
 from django_filters import rest_framework as filters
-from rest_framework import generics
-
-from drf_spectacular.utils import extend_schema
-from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.openapi import OpenApiParameter
+from drf_spectacular.utils import extend_schema
+from rest_framework import generics
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 from .models import Song
 from .serializer import SongSerializer
@@ -72,6 +72,15 @@ class SongsApi(generics.ListCreateAPIView):
     filter_backends = [filters.DjangoFilterBackend]
     filterset_class = SongFilter
 
+    authentication_classes = [TokenAuthentication]
+
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            permission_classes = []
+        else:
+            permission_classes = [IsAuthenticated]
+        return [permission() for permission in permission_classes]
+
     def get_queryset(self):
         search_query = self.request.query_params.get('search', None)
         if search_query:
@@ -135,6 +144,15 @@ class SongApi(generics.RetrieveDestroyAPIView):
 
     queryset = Song.objects.all()
     serializer_class = SongSerializer
+
+    authentication_classes = [TokenAuthentication]
+
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            permission_classes = []
+        else:
+            permission_classes = [IsAuthenticated]
+        return [permission() for permission in permission_classes]
 
     def get(self, request, *args, **kwargs):
         """

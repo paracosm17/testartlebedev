@@ -16,6 +16,12 @@ su - postgres -c "psql -c \"SELECT 1 FROM pg_database WHERE datname='$POSTGRES_D
 python manage.py makemigrations
 python manage.py migrate
 python manage.py parsetable songs.json
+
+DJANGO_SUPERUSER_USERNAME=test \
+DJANGO_SUPERUSER_PASSWORD=test \
+DJANGO_SUPERUSER_EMAIL="test@test.ru" \
+python manage.py createsuperuser --noinput
+
 python manage.py runserver 0.0.0.0:8000
 
 exec "$@"

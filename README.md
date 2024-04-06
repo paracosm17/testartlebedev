@@ -31,7 +31,7 @@ sudo docker run -p 5439:5432 -p 8000:8000 -d -e POSTGRES_USER=myuser -e POSTGRES
 #### Проверка
 С помощью curl быстро проверим, что сервис успешно запустился и апи возвращает код `200`
 ```bash
-curl -o /dev/null -I -L -s -w "%{http_code}" http://127.0.0.1:8000/api/songs
+curl -o /dev/null -I -L -s -w "%{http_code}\n" http://127.0.0.1:8000/api/songs
 ```
 output:
 ```bash

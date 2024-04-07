@@ -5,7 +5,7 @@ service postgresql start
 echo "Waiting for postgres..."
 
 while ! nc -z localhost 5432; do
-  sleep 0.1
+  sleep 1
 done
 
 echo "PostgreSQL started"
@@ -17,8 +17,8 @@ python manage.py makemigrations
 python manage.py migrate
 python manage.py parsetable songs.json
 
-DJANGO_SUPERUSER_USERNAME=test \
-DJANGO_SUPERUSER_PASSWORD=test \
+DJANGO_SUPERUSER_USERNAME=$DJANGO_USER \
+DJANGO_SUPERUSER_PASSWORD=$DJANGO_PASSWORD \
 DJANGO_SUPERUSER_EMAIL="test@test.ru" \
 python manage.py createsuperuser --noinput
 

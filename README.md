@@ -14,17 +14,14 @@ https://opendata.mkrf.ru/opendata.
 
 #### Образ из докерхаба: <br>
 ```bash
-sudo docker run -p 5439:5432 -p 8000:8000 -d -e POSTGRES_USER=myuser -e POSTGRES_PASSWORD=mypassword -e POSTGRES_DB=mydb paracosm17/testartlebedev
+sudo docker run -p 5439:5432 -p 8000:8000 -d -e POSTGRES_USER=myuser -e POSTGRES_PASSWORD=mypassword -e POSTGRES_DB=mydb -e DJANGO_USER=test -e DJANGO_PASSWORD=test paracosm17/testartlebedev
 ```
-
-#### Из исходников: <br>
-```bash
-git clone https://github.com/paracosm17/testartlebedev.git
-cd testartlebedev
-sudo docker build -t testartlebedev .
-sudo docker run -p 5439:5432 -p 8000:8000 -d -e POSTGRES_USER=myuser -e POSTGRES_PASSWORD=mypassword -e POSTGRES_DB=mydb testartlebedev
-```
-
+*Необходимые переменные окружения*: <br>
+`POSTGRES_USER`=myuser <br>
+`POSTGRES_PASSWORD`=mypassword <br>
+`POSTGRES_DB`=mydb <br>
+`DJANGO_USER`=test <br>
+`DJANGO_PASSWORD`=test <br>
 #### Важно!
 Порты `5439` и `8000` должны быть свободны на целевой машине. В случае, если они заняты, замените их. Например, на `5438` или `8001` (порт который перед : )
 

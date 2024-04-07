@@ -19,7 +19,7 @@ sudo docker run -p 5439:5432 -p 8000:8000 -d -e POSTGRES_USER=myuser -e POSTGRES
 
 #### Из исходников: <br>
 ```bash
-git clone git@github.com:paracosm17/testartlebedev.git
+git clone https://github.com/paracosm17/testartlebedev.git
 cd testartlebedev
 sudo docker build -t testartlebedev .
 sudo docker run -p 5439:5432 -p 8000:8000 -d -e POSTGRES_USER=myuser -e POSTGRES_PASSWORD=mypassword -e POSTGRES_DB=mydb testartlebedev

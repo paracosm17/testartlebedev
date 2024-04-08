@@ -27,7 +27,7 @@ sudo docker run -p 5439:5432 -p 8000:8000 -d -e POSTGRES_USER=myuser -e POSTGRES
 
 #### Проверка
 С помощью curl проверим, что сервис успешно запустился и мы можем получить токен авторизации. <br>
-Не запускайте эту команду сразу после выполнения `docker run`, будет ошибка. Нужно немножко подождать
+Не запускайте эту команду сразу после выполнения `docker run`, будет ошибка `curl: (56) Recv failure: Connection reset by peer`. Нужно немножко подождать пока всё запустится
 ```bash
 curl -X POST -d 'username=test&password=test' http://127.0.0.1:8000/api/token
 ```

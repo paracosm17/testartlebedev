@@ -1,4 +1,5 @@
 import json
+import csv
 
 from django.core.management.base import BaseCommand
 
@@ -48,38 +49,31 @@ class Command(BaseCommand):
             return
 
         elif extension.lower() == "csv":
-            with open(path, 'r', encoding='utf-8') as file:
-                lines = file.read().splitlines()
-
-                for line in lines[1:]:
-                    if line.startswith('"') and line.endswith('"'):
-                        line = line[1:-1]
-                    line = line.split(",")
-                    if len(line) != 8:
-                        self.stdout.write(self.style.ERROR("It looks like you have incorrect CSV table"))
-                        return
-
+            with open(path, "r", encoding='utf-8') as file:
+                file_reader = csv.DictReader(file, delimiter=",")
+                for row in file_reader:
                     if not Song.objects.filter(
-                            fullname=line[0],
-                            composer=line[1],
-                            creationyear=line[2],
-                            author=line[3],
-                            genre=line[4],
-                            genretype=line[5],
-                            theme=line[6],
-                            tags=line[7]
+                            fullname=row["Название"],
+                            composer=row["Композитор"],
+                            creationyear=row["Год создания"],
+                            author=row["Автор текста"],
+                            genre=row["Музыкальный жанр"],
+                            genretype=row["ID музыкального жанра"],
+                            theme=row["Тема"],
+                            tags=row["Ключевые слова"]
                     ).exists():
                         Song.objects.create(
-                            fullname=line[0],
-                            composer=line[1],
-                            creationyear=line[2],
-                            author=line[3],
-                            genre=line[4],
-                            genretype=line[5],
-                            theme=line[6],
-                            tags=line[7]
+                            fullname=row["Название"],
+                            composer=row["Композитор"],
+                            creationyear=row["Год создания"],
+                            author=row["Автор текста"],
+                            genre=row["Музыкальный жанр"],
+                            genretype=row["ID музыкального жанра"],
+                            theme=row["Тема"],
+                            tags=row["Ключевые слова"]
                         )
                         counter += 1
+
             self.stdout.write(self.style.SUCCESS(f"Successfully imported {counter} songs from CSV"))
             return
 
